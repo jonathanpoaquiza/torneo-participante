@@ -26,6 +26,10 @@ class MapaTorneo : AppCompatActivity() {
     var permisos = false
     val nombrePermisoFine = android.Manifest.permission.ACCESS_FINE_LOCATION
     val nombrePermisoCoarse = android.Manifest.permission.ACCESS_COARSE_LOCATION
+    private var latitud: Double = 0.0
+    private var longitud: Double = 0.0
+    private var torneo: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -35,13 +39,18 @@ class MapaTorneo : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        // Obtener datos del Intent
+        latitud = intent?.getDoubleExtra("latitud", Double.NaN) ?: Double.NaN
+        longitud = intent?.getDoubleExtra("longitud", Double.NaN) ?: Double.NaN
+
+        if (latitud.isNaN() || longitud.isNaN()) {
+            mostrarSnackbar("Error: Coordenadas inválidas")
+            return
+        }
+
+        torneo = intent.getStringExtra("nombre") ?: ""
         solicitarPermisos()
-        inicializarLogicaMapa()
-        /*val botonCarolina = findViewById<Button>(R.id.btn_ir_carolina)
-        botonCarolina.setOnClickListener {
-            val carolina = LatLng(-0.18221288005854652, -78.48553955554578)
-            moverCamaraConZoom(carolina)
-        }*/
+        inicializarLogicaMapa(latitud,longitud,torneo)
     }
 
     fun tengoPermisos(): Boolean {
@@ -62,7 +71,7 @@ class MapaTorneo : AppCompatActivity() {
         }
     }
 
-    fun inicializarLogicaMapa() {
+    fun inicializarLogicaMapa(lat: Double, lng: Double, torneo:String) {
         val fragmentoMapa = supportFragmentManager.findFragmentById(
             R.id.map
         ) as SupportMapFragment
@@ -70,51 +79,53 @@ class MapaTorneo : AppCompatActivity() {
             with(googleMap) {
                 mapa = googleMap
                 establecerConfiguracionMapa()
-                moverQuicentro()
-                anadirPolilinea()
-                anadirPoligono()
+                moverUbicacion(lat, lng, torneo)
+                anadirPolilinea(lat, lng)
+                anadirPoligono(lat, lng)
                 escucharListeners()
             }
         }
     }
 
-    fun moverQuicentro() {
-        val quicentro = LatLng(-0.17633018352832922, -78.47853222234333)
-        val titulo = "Quicentro"
-        val marcadorQuicentro = anadirMarcador(quicentro, titulo)
-        marcadorQuicentro.tag = titulo
-        moverCamaraConZoom(quicentro)
+    fun moverUbicacion(lat: Double, lng: Double, torneo:String) {
+        val ubicacion = LatLng(lat, lng)
+        val titulo = torneo
+        val marcador = anadirMarcador(ubicacion, titulo)
+        marcador.tag = titulo
+        moverCamaraConZoom(ubicacion)
     }
 
-    fun anadirPolilinea() {
+    fun anadirPolilinea(lat: Double, lng: Double) {
         with(mapa) {
             val polilinea = mapa.addPolyline(
                 PolylineOptions()
                     .clickable(true)
                     .add(
-                        LatLng(-0.17791267925471754, -78.48185816127831),
-                        LatLng(-0.18019791013168018, -78.48539867691878),
-                        LatLng(-0.1822149211841061, -78.48320999452285)
+                        LatLng(lat + 0.001, lng - 0.001),
+                        LatLng(lat - 0.001, lng + 0.001),
+                        LatLng(lat + 0.002, lng + 0.002)
                     )
             )
             polilinea.tag = "polilinea-uno"
         }
     }
 
-    fun anadirPoligono() {
+    fun anadirPoligono(lat: Double, lng: Double) {
         with(mapa) {
             val poligono = mapa.addPolygon(
                 PolygonOptions()
                     .clickable(true)
                     .add(
-                        LatLng(-0.17810579736798682, -78.48025956482248),
-                        LatLng(-0.18047685848208925, -78.47937980033),
-                        LatLng(-0.17664668268438008, -78.4796694788824),
+                        LatLng(lat + 0.0015, lng - 0.0015),
+                        LatLng(lat - 0.0015, lng - 0.0015),
+                        LatLng(lat - 0.0015, lng + 0.0015),
+                        LatLng(lat + 0.0015, lng + 0.0015)
                     )
             )
             poligono.tag = "poligono-uno"
         }
     }
+
 
     fun escucharListeners() {
         mapa.setOnPolygonClickListener {

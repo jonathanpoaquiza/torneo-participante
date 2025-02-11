@@ -87,7 +87,12 @@ class TorneoListView : AppCompatActivity() {
             }
             R.id.mi_mapa -> {
                 val torneoSeleccionado = listaTorneos[posicionItemSeleccionado]
-                irActividad(MapaTorneo::class.java, torneoSeleccionado)
+                val intent = Intent(this, MapaTorneo::class.java).apply {
+                    putExtra("latitud", torneoSeleccionado.latitud)
+                    putExtra("longitud", torneoSeleccionado.longitud)
+                    putExtra("nombre", torneoSeleccionado.nombre)
+                }
+                startActivity(intent)
                 return true
             }
             else -> super.onContextItemSelected(item)

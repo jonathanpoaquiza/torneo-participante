@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo2_app"
+    tools:context=".CrudParticipante">
+
+    <!-- EditText for ID -->
+    <EditText
+        android:id="@+id/input_participante_id"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:hint="Ingrese ID del participante"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/input_participante_nombre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <!-- EditText for Name -->
+    <EditText
+        android:id="@+id/input_participante_nombre"
+        android:layout_width="0dp"
+        android:layout_height="73dp"
+        android:hint="Ingrese nombre del participante"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/input_participante_fecha_nacimiento"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_participante_id"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <!-- EditText for Date of Birth (String format) -->
+    <EditText
+        android:id="@+id/input_participante_fecha_nacimiento"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:hint="Ingrese fecha de nacimiento (DD/MM/YYYY)"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/input_participante_ranking"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_participante_nombre"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <!-- EditText for Ranking -->
+    <EditText
+        android:id="@+id/input_participante_ranking"
+        android:layout_width="0dp"
+        android:layout_height="51dp"
+        android:hint="Ingrese ranking del participante"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toTopOf="@+id/input_participante_activo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_participante_fecha_nacimiento"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <!-- CheckBox for active status -->
+
+    <!-- CRUD Buttons -->
+    <CheckBox
+        android:id="@+id/input_participante_activo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:text="Participante Activo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_participante_ranking" />
+
+    <Button
+        android:id="@+id/btn_crear_participante"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Crear Participante"
+        app:layout_constraintTop_toBottomOf="@id/input_participante_activo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <Button
+        android:id="@+id/btn_actualizar_participante"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Actualizar Participante"
+        app:layout_constraintTop_toBottomOf="@id/btn_crear_participante"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.6" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

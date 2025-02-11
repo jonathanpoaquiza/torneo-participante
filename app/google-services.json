@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "37129427652",
+    "project_id": "torneo-participantes",
+    "storage_bucket": "torneo-participantes.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:37129427652:android:c8f7f2b455c79ecbde0791",
+        "android_client_info": {
+          "package_name": "com.example.torneo_participante"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxFuH0zlVA31kgk7YxDWnaQEwV8uAyi4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
